@@ -1,4 +1,5 @@
 # Live2D-M
+
 基于electron的，在本地使用的，加载Live2D模型的小程序，支持MOC和MOC3。
 
 M的意思就是My Live2D（笑
@@ -91,19 +92,56 @@ github上关于MOC3的代码有好几个，基本上是同源[alg-wiki/AzurLaneL
 
 狗哥每次架梯麻烦，也就bing好用一点。然后通过bing看到某篇blog的我震惊了。因为遵照License中的内容，live2dcubismcore.min.js是不允许再分发的，需要从[live2d官网](https://live2d.github.io)下载Cubism SDK for Web。
 
-好吧，这我之前真的完全不知道，省得被查水表，暂时先不挂源码了。挂一个封装好的程序先扔到百度云上供大家测试使用。
+好吧，这我之前真的完全不知道，省得被查水表，~~暂时先不挂源码了~~，live2dcubismcore.min.js我删除了，需要的话请到官网自助下载后放进static文件夹。
+
+程序大概100M+，鉴于Github的下载尿性，顺便挂一个封装好的程序扔到百度云上供大家测试使用。
 
 参考：[姬羽のBlog](https://himehane.club/live2d_on_website/)
 
 
 ## 程序截图&使用方法
 ![1.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/1.png)
+软件主界面，支持MOC和MOC3
+
 ![2.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/2.png)
+左键图标显示、隐藏MOD，右键图标弹出选单
+
 ![3.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/3.png)
+基础设置菜单，（因为Win10的缩放与布局设置，可能会使程序比例放大变的模糊，这里改小比例会缩放MOD）
+
 ![4.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/4.png)
+导入模型，MOC和MOC3分别所选择的文件
+
 ![5.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/5.png)
+Alt+鼠标左键移动MOD界面
+
 ![6.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/6.png)
+Ctrl+鼠标左键报告当前坐标点（针对部分MOC格式没有设置hit_areas所造成的不能触摸问题，可以自己手动划定触摸区域，详见提供的测试MOD）
+
 
 ## 程序百度云
 
-待更新……
+主程序
+下载：[百度云](https://pan.baidu.com/s/1HTHpJhDVWA2A7e7uVdtlSA)，提取码：thcb
+
+主程序+测试MOD
+下载：[百度云](https://pan.baidu.com/s/1JvyXLsKyiciXP9aR5bekjw)，提取码：qq5g
+
+注：测试MOD的版权归版权方所有，仅供学习和交流使用，并请于下载后24小时内删除，谢谢。
+
+
+## 追加
+
+源代码的使用请参见electron官方文档，简单来说应该就是三步。
+# 进入文件夹根目录
+$ cd xxxxx
+# 安装依赖库
+$ npm install
+# 运行应用
+$ npm start
+
+
+## 声明
+
+Copyright (c) 2020-present LONY (kongbaiku)
+本项目采用GPL（GNU通用公共许可协议），可自由修改和使用，但不允许任何形式的商用，包括并不限于添加广告、做为闭源的商业软件发布和销售等。
