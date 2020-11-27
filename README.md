@@ -97,9 +97,12 @@ github上关于MOC3的代码有好几个，基本上是同源[alg-wiki/AzurLaneL
 
 
 ## 程序截图&使用方法
-
-待更新……
-
+![1.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/1.png)
+![2.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/2.png)
+![3.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/3.png)
+![4.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/4.png)
+![5.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/5.png)
+![6.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/6.png)
 
 ## 程序百度云
 
