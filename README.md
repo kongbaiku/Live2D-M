@@ -156,6 +156,7 @@ $ npm start
 ## 版权声明
 
 Copyright (c) 2020-present LONY (kongbaiku)
+
 本项目采用GPL（GNU通用公共许可协议），可自由修改和使用，但不允许任何形式的商用，包括并不限于添加广告、做为闭源的商业软件发布和销售等。
 
 
