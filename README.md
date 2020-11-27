@@ -102,39 +102,28 @@ github上关于MOC3的代码有好几个，基本上是同源[alg-wiki/AzurLaneL
 ## 程序截图&使用方法
 ![1.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/1.png)
 
-软件主界面，支持MOC和MOC3
+<br/>**软件主界面，支持MOC和MOC3**</br>
 
-  
-  
 ![2.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/2.png)
 
-左键图标显示、隐藏MOD，右键图标弹出选单
+<br/>**左键图标显示、隐藏MOD，右键图标弹出选单**</br>
 
-  
-  
 ![3.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/3.png)
 
-基础设置菜单，（因为Win10的缩放与布局设置，可能会使程序比例放大变的模糊，这里改小比例会缩放MOD）
+<br/>**基础设置菜单，（因为Win10的缩放与布局设置，可能会使程序比例放大变的模糊，这里改小比例会缩放MOD）**</br>
 
-  
-  
 ![4.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/4.png)
 
-导入模型，MOC和MOC3分别所选择的文件
+<br/>**导入模型，MOC和MOC3分别所选择的文件**</br>
 
-  
-  
 ![5.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/5.png)
 
-Alt+鼠标左键移动MOD界面
+<br/>**Alt+鼠标左键移动MOD界面**</br>
 
-  
-  
 ![6.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/6.png)
 
-Ctrl+鼠标左键报告当前坐标点（针对部分MOC格式没有设置hit_areas所造成的不能触摸问题，可以自己手动划定触摸区域，详见提供的测试MOD）
-  
-  
+<br/>**Ctrl+鼠标左键报告当前坐标点（针对部分MOC格式没有设置hit_areas所造成的不能触摸问题，可以自己手动划定触摸区域，详见提供的测试MOD）**</br>
+
 
 ## 程序百度云
 
