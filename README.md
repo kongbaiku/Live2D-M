@@ -1,5 +1,7 @@
 # Live2D-M
-基于electron的，在本地使用的，加载Live2D模型的小程序，支持MOC和MOC3
+基于electron的，在本地使用的，加载Live2D模型的小程序，支持MOC和MOC3。
+
+M的意思就是My Live2D（笑
 
 
 ## 开始
@@ -93,9 +95,11 @@ github上关于MOC3的代码有好几个，基本上是同源[alg-wiki/AzurLaneL
 
 参考：[姬羽のBlog](https://himehane.club/live2d_on_website/)
 
+
 ## 程序截图&使用方法
 
 待更新……
+
 
 ## 程序百度云
 
