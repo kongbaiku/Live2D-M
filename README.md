@@ -20,7 +20,7 @@ M的意思就是My Live2D（笑
 
 第一版支持MOC，也就是Cubism 2，大概完成于20年7月，因为github上有比较成熟的项目，所以并不算困难，时间多数花在了electron的学习与使用上。
 
-说真的我一个地地道道的C学家，一开始看PPet的源码真的跟看天书似的，也并不能让新手凭借几行代码简简单单跑起来看到效果（至少当时菜鸡的我没用源码跑起来），实在不适合electron入门。
+说真的我一个地地道道的C学家，一开始看PPet的源码真的跟看天书似的，也许是环境的问题，代码也并不能让新手凭借几行代码简简单单跑起来看到效果（至少当时菜鸡的我没用源码跑起来），实在不适合electron入门。
 
 好在找到了[erwindy/live2d-desktop](https://github.com/erwindy/live2d-desktop)，这个作者的代码就很友好了，简单直接没有花活，就是纯粹的加载MOD，很容易就能看懂，按照electron官方流程安装依赖库后就可以直接跑起来，适合electron入门。
 
@@ -133,11 +133,11 @@ github上关于MOC3的代码有好几个，基本上是同源[alg-wiki/AzurLaneL
 
 ## 程序百度云
 
-主程序
+**主程序**
 
 下载：[百度云](https://pan.baidu.com/s/1HTHpJhDVWA2A7e7uVdtlSA)，提取码：thcb
 
-主程序+测试MOD
+**主程序+测试MOD**
 
 下载：[百度云](https://pan.baidu.com/s/1JvyXLsKyiciXP9aR5bekjw)，提取码：qq5g
 
