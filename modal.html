@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" href="assets/modal.css"/>
+</head>
+<body >
+	<a id="whtitle">基础设置</a>
+	<a id="titleb" style="-webkit-app-region: drag;">&nbsp;</a>
+	<a class="fui-close" id="close" href="javascript:window.close()"></a>
+	
+    <div id="whset">
+		<p>看板娘大小：</p>
+		<a id="tw">宽：</a>
+		<input type="number" id="modWidth" name="" value="">
+		<br/>
+		<a id="th">高：</a>
+		<input type="number" id="modHeight" name="" value="">
+		<br/>
+
+		<p>画布大小：</p>
+		<a id="tw">宽：</a>
+		<input type="number" id="canvasWidth" name="" value="">
+		<br/>
+		<a id="th">高：</a>
+		<input type="number" id="canvasHeight" name="" value="">
+		<br/>	
+		
+		<p>提示框大小：</p>
+		<a id="tw">宽：</a>
+		<input type="number" id="tipsWidth" name="" value="">
+		<br/>
+		<a id="th">高：</a>
+		<input type="number" id="tipsHeight" name="" value="">
+		<br/>
+	</div>
+	
+	<div id="cbSet">
+		<p>启用工具栏<input type="checkbox" id="toolbar" name="ckb"></p>
+		<p>启用模型切换<input type="checkbox" id="modSwitch" name="ckb">随机切换<input type="checkbox" id="randMod" name="ckb"></p>
+		<p>启用材质切换<input type="checkbox" id="skinSwitch" name="ckb">随机切换<input type="checkbox" id="randSkin" name="ckb"></p>
+		<p>启用一言<input type="checkbox" id="yiyan" name="ckb">一言切换按钮<input type="checkbox" id="yiyanBtn" name="ckb"></p>
+		<p>启用看板娘截图<input type="checkbox" id="screenshot" name="ckb"></p>
+		<p>显示进入面页欢迎词<input type="checkbox" id="welcome" name="ckb"></p>
+		<p style="display:none;">启用调试台（重启生效）<input type="checkbox" id="devTool" name="ckb" style="display:none;"></p>
+		<p>程序缩放比例：<input type="number" id="zoomNum" name="" value="">&nbsp;%<br/><a><font size="1">（针对Win10模型模糊，100%为未缩放）</font></a></p>
+	</div>
+	
+	<div id="btn">
+		<button class="button" id="ok"><span>确定</span></button>
+		<button class="button" id="cancel"><span>取消</span></button>
+	</div>
+
+	<script src="assets/waifu-tips.js?v=1.4.2"></script>
+    <script src="assets/live2d.js?v=1.0.5"></script>
+    <script type="text/javascript">
+/*********************************************************************/
+/******************************初始设置*******************************/
+		var ipcTR = require('electron').ipcRenderer;
+		var webFrame = require('electron').webFrame;		
+		
+		document.getElementById("modSwitch").disabled = "disabled";
+		document.getElementById("randMod").disabled = "disabled";
+		document.getElementById("skinSwitch").disabled = "disabled";
+		document.getElementById("randSkin").disabled = "disabled";
+		document.getElementById("yiyan").disabled = "disabled";
+		document.getElementById("yiyanBtn").disabled = "disabled";
+		document.getElementById("screenshot").disabled = "disabled";
+				
+		ipcTR.send('getBaseConfig');
+			
+			
+/*********************************************************************/
+/******************************通讯设置*******************************/	
+		
+		ipcTR.on('currentWinSize', (event, width, height) => {
+			document.getElementById("canvasWidth").value = width;
+			document.getElementById("canvasHeight").value = height;
+		});
+			
+		ipcTR.on('currentBaseConfig', (event, modWH, tipWH, reckb, zoomFactor) => {
+			document.getElementById("modWidth").value = modWH[0];
+			document.getElementById("modHeight").value = modWH[1];
+			document.getElementById("tipsWidth").value = tipWH[0];
+			document.getElementById("tipsHeight").value = tipWH[1];
+			
+			document.getElementById("toolbar").checked = reckb[0];
+			document.getElementById("modSwitch").checked = reckb[1];
+			document.getElementById("randMod").checked = reckb[2];
+			document.getElementById("skinSwitch").checked = reckb[3];
+			document.getElementById("randSkin").checked = reckb[4];
+			document.getElementById("yiyan").checked = reckb[5];
+			document.getElementById("yiyanBtn").checked = reckb[6];
+			document.getElementById("screenshot").checked = reckb[7];
+			document.getElementById("welcome").checked = reckb[8];
+			document.getElementById("devTool").checked = reckb[9];
+			if(zoomFactor[0] == 1)
+			{
+				document.getElementById("zoomNum").value = zoomFactor[1];
+			}
+			else
+			{
+				document.getElementById("zoomNum").value = webFrame.getZoomFactor()*100;
+			}
+						
+			if(reckb[0] == 1)
+			{
+				document.getElementById("modSwitch").disabled = "";
+				document.getElementById("skinSwitch").disabled = "";
+				document.getElementById("yiyan").disabled = "";
+				document.getElementById("screenshot").disabled = "";
+				if(reckb[2] == 1)
+				{
+					document.getElementById("randMod").disabled = "";
+				}
+				if(reckb[4] == 1)
+				{
+					document.getElementById("randSkin").disabled = "";
+				}
+				if(reckb[6] == 1)
+				{
+					document.getElementById("yiyanBtn").disabled = "";
+				}
+			}
+			if(reckb[1] == 1)
+			document.getElementById("randMod").disabled = "";
+			if(reckb[3] == 1)
+			document.getElementById("randSkin").disabled = "";
+			if(reckb[5] == 1)
+			document.getElementById("yiyanBtn").disabled = "";	
+		});
+		
+	
+/*********************************************************************/
+/******************************基础设置*******************************/	
+		
+		document.getElementById('ok').onclick = function () {
+			
+			if(canvasWidth.value != 0 && modWidth.value != 0 && tipsWidth.value != 0)
+			{
+				if(canvasHeight.value != 0 && modHeight.value != 0 && tipsHeight.value != 0)
+				{
+					var baseWH = new Array();			
+					baseWH[0] = canvasWidth.value;
+					baseWH[1] = canvasHeight.value;
+					baseWH[2] = modWidth.value;
+					baseWH[3] = modHeight.value;
+					baseWH[4] = tipsWidth.value;
+					baseWH[5] = tipsHeight.value;	
+
+					
+					var ckb = new Array();  
+					var items = document.getElementsByName("ckb");                 
+					for (i = 0; i < items.length; i++)
+					{                    
+						if (items[i].checked) 
+						{                        
+							ckb.push(1);                    
+						}
+						else
+						{
+							ckb.push(0); 
+						}
+					}
+					
+					var zoomFactor = new Array();
+					zoomFactor[0] = 1;
+					zoomFactor[1] = zoomNum.value;
+					
+					ipcTR.send('setConfig', baseWH, ckb, zoomFactor);
+					window.close();
+				}
+				else
+				{
+					ipcTR.send('winSizeError');
+				}				
+			}
+			else
+			{
+				ipcTR.send('winSizeError');
+			}				
+		}		
+		
+		document.getElementById('cancel').onclick = function () {
+			window.close();
+		}
+
+
+/*********************************************************************/
+/******************************附加设置*******************************/	
+		
+		document.getElementById('toolbar').onclick = function () {
+			if(document.getElementById('toolbar').checked == true)
+			{
+				document.getElementById("modSwitch").disabled = "";
+				document.getElementById("randMod").disabled = "";
+				document.getElementById("skinSwitch").disabled = "";
+				document.getElementById("randSkin").disabled = "";
+				document.getElementById("yiyan").disabled = "";
+				document.getElementById("yiyanBtn").disabled = "";
+				document.getElementById("screenshot").disabled = "";
+			}
+			else
+			{
+				document.getElementById("modSwitch").disabled = "disabled";
+				document.getElementById("randMod").disabled = "disabled";
+				document.getElementById("skinSwitch").disabled = "disabled";
+				document.getElementById("randSkin").disabled = "disabled";
+				document.getElementById("yiyan").disabled = "disabled";
+				document.getElementById("yiyanBtn").disabled = "disabled";
+				document.getElementById("screenshot").disabled = "disabled";
+				
+				document.getElementById("modSwitch").checked = false;
+				document.getElementById("randMod").checked = false;
+				document.getElementById("skinSwitch").checked = false;
+				document.getElementById("randSkin").checked = false;
+				document.getElementById("yiyan").checked = false;
+				document.getElementById("yiyanBtn").checked = false;
+				document.getElementById("screenshot").checked = false;
+			}
+		}		
+		
+		document.getElementById('modSwitch').onclick = function () {
+			if(document.getElementById('modSwitch').checked == true)
+			{
+				document.getElementById("randMod").disabled = "";
+			}
+			else
+			{
+				document.getElementById("randMod").disabled = "disabled";
+				document.getElementById("randMod").checked = false;
+			}
+		}		
+		
+		document.getElementById('skinSwitch').onclick = function () {
+			if(document.getElementById('skinSwitch').checked == true)
+			{
+				document.getElementById("randSkin").disabled = "";
+			}
+			else
+			{
+				document.getElementById("randSkin").disabled = "disabled";
+				document.getElementById("randSkin").checked = false;
+			}
+		}
+				
+		document.getElementById('yiyan').onclick = function () {
+			if(document.getElementById('yiyan').checked == true)
+			{
+				document.getElementById("yiyanBtn").disabled = "";
+			}
+			else
+			{
+				document.getElementById("yiyanBtn").disabled = "disabled";
+				document.getElementById("yiyanBtn").checked = false;
+			}
+		}
+		
+		
+/*********************************************************************/
+/*********************************************************************/	
+		
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+

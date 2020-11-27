@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>MyLive2D 看板娘 v1.2.1</title>
+
+	<!-- MOC支持文件 -->
+	<!-- waifu.css界面配置 -->
+    <link rel="stylesheet" type="text/css" href="assets/waifu.css?v=1.4.2"/>
+	<!-- waifu-tips.js 依赖 JQuery 库 -->
+    <script src="assets/jquery-1.8.0.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script src="assets/jquery-ui.min.js"></script>
+	<!-- MOC用户配置 -->
+	<script src="assets/waifu-tips.js?v=1.4.2"></script>
+    <script src="assets/live2d.js?v=1.0.5"></script>
+	
+	<!-- MOC3支持文件 -->
+	<!-- Live2D立体核心 -->
+    <script src="static/live2dcubismcore.min.js"></script>
+	<!-- Pixi.2D渲染引擎 -->
+    <script src="static/pixi.min.js"></script>
+	<!-- Live2D立体组件 -->
+    <script src="static/live2dcubismframework.js"></script>
+    <script src="static/live2dcubismpixi.js"></script>
+	<!-- 音频播放兼容 -->
+    <script src="static/howler.min.js"></script>
+	<!-- MOC3用户配置 -->
+    <script src="static/l2d.js"></script>
+    <script src="static/main.js"></script>
+	<!-- <script src="static/jquery.min.js"></script> -->
+</head>
+
+<body >
+	<!-- 设置拖拽图标，启用拖拽 -->
+	<div class="mengban" id="drag" style="-webkit-app-region: drag;"></div>
+    <div class="waifu">  
+		<canvas class="live2d" id="live2d"></canvas>
+		<div class="Canvas"  id="L2dCanvas"></div>
+		<div class="waifu-tips" id="L2dTip"></div>
+        <div class="waifu-tool">
+            <span class="fui-home"></span>
+            <span class="fui-chat"></span>
+            <span class="fui-eye"></span>
+            <span class="fui-user"></span>
+            <span class="fui-photo"></span>
+            <span class="fui-info-circle"></span>
+            <span class="fui-cross"></span>
+        </div>
+    </div>
+    <script type="text/javascript">
+	
+		<!----- 初始化设置 ----->
+		var ipcMR = require('electron').ipcRenderer;
+		var Store = require('electron-store');
+		var webFrame = require('electron').webFrame;
+		var ctrlKeyFlag = 0;
+	
+		const appConfig = new Store();
+		
+		if(appConfig.get('canZoomFactor') == 1)
+		{
+			webFrame.setZoomFactor(appConfig.get('zoomFactor')/100);
+		}
+		
+        
+		if(appConfig.get('custom') == 1)
+		{			
+			live2d_settings['waifuSize'] = appConfig.get('waifuSize');        		
+			live2d_settings['waifuTipsSize'] = appConfig.get('waifuTipsSize');     	
+			
+			live2d_settings['showToolMenu'] = appConfig.get('showToolMenu') == 1 ? true : false;					
+			live2d_settings['canSwitchModel'] = appConfig.get('canSwitchModel') == 1 ? true : false;  				
+			live2d_settings['modelRandMode'] = appConfig.get('modelRandMode') == 1 ? true : false; 					
+			live2d_settings['canSwitchTextures'] = appConfig.get('canSwitchTextures') == 1 ? true : false; 			
+			live2d_settings['modelTexturesRandMode'] = appConfig.get('modelTexturesRandMode') == 1 ? true : false;	
+			live2d_settings['showHitokoto'] = appConfig.get('showHitokoto') == 1 ? true : false;					
+			live2d_settings['canSwitchHitokoto'] = appConfig.get('canSwitchHitokoto') == 1 ? true : false;			
+			live2d_settings['canTakeScreenshot'] = appConfig.get('canTakeScreenshot') == 1 ? true : false;			
+			live2d_settings['showWelcomeMessage'] = appConfig.get('showWelcomeMessage') == 1 ? true : false;		
+		
+			live2dMoc3_settings['modWidth'] = Number(appConfig.get('waifuSize').split('x')[0]);
+			live2dMoc3_settings['modHeight'] = Number(appConfig.get('waifuSize').split('x')[1]);
+			live2dMoc3_settings['modLeft'] = 0+'px';
+			live2dMoc3_settings['modTop'] = 0+'px';
+			
+			
+			document.getElementById("L2dTip").style.left=
+			(Number(appConfig.get('waifuSize').split('x')[0]-appConfig.get('waifuTipsSize').split('x')[0]))/2-30+'px';
+			document.getElementById("L2dTip").style.top=
+			Number(-30-appConfig.get('waifuTipsSize').split('x')[1])+'px';
+		}
+		
+        
+		initModel("assets/waifu-tips.json?v=1.4.2");
+		
+		
+		ipcMR.on('curBaseConfig', (event) => {
+			var reckb = new Array();			
+			reckb[0] = live2d_settings['showToolMenu'];
+			reckb[1] = live2d_settings['canSwitchModel'];
+			reckb[2] = live2d_settings['modelRandMode'];
+			reckb[3] = live2d_settings['canSwitchTextures'];
+			reckb[4] = live2d_settings['modelTexturesRandMode'];
+			reckb[5] = live2d_settings['showHitokoto'];
+			reckb[6] = live2d_settings['canSwitchHitokoto'];
+			reckb[7] = live2d_settings['canTakeScreenshot'];
+			reckb[8] = live2d_settings['showWelcomeMessage'];
+			reckb[9] = appConfig.get('openDevTools');
+			var zoomFactor = new Array();
+			zoomFactor[0] = appConfig.get('canZoomFactor');
+			zoomFactor[1] = appConfig.get('zoomFactor');
+			ipcMR.send('reCurBaseConfig', live2d_settings['waifuSize'], live2d_settings['waifuTipsSize'], reckb, zoomFactor);	
+		});
+		
+		
+		ipcMR.on('reInitVal', (event) => {
+			appConfig.clear();
+			ipcMR.send('win-reBoot');
+		});
+		
+		
+		document.onkeydown = function(e) {
+            var altKey = e.altKey ;
+			var ctrlKey = e.ctrlKey ;
+            if(altKey == 1) 
+			{
+				
+				document.getElementById("drag").style.display="block";
+            }
+			if(ctrlKey == 1) 
+			{
+				ctrlKeyFlag = 1;	
+            }
+			e.preventDefault();
+			return false;
+        }
+		
+		
+		document.onkeyup = function (e) {
+			var altKey = e.altKey ;
+			var ctrlKey = e.ctrlKey ;
+            if(altKey == 0) 
+			{
+				document.getElementById("drag").style.display="none";
+            }
+			if(ctrlKey == 0) 
+			{
+				ctrlKeyFlag = 0;	
+            }
+			e.preventDefault();
+			return false;
+        }
+		
+		
+		document.onmousedown = function(e) {
+			if(ctrlKeyFlag == 1)
+			{
+				ctrlKeyFlag = 0;
+				alert("X:"+live2dPoint['x']+"\nY:"+live2dPoint['y']);
+			}
+		}
+
+    </script>
+</body>
+</html>
+
+
