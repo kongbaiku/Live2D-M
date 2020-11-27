@@ -1,0 +1,174 @@
+body {
+  font-family: 'Microsoft YaHei';	/* 字体 */
+  color: #fff;						/* 字体颜色 */
+  background-color: #8aba87;		/* 背景颜色 */
+  /* text-align: center;*/			/* 文本居中 */ 
+  font-size: 20px;					/* 字体大小 */
+}
+
+a{
+  position: absolute;
+  text-decoration: none;
+}
+
+p{
+  font-size: 15px;
+  text-decoration: none;
+  -webkit-user-select:none; /* 禁止选中 */
+}
+
+/* 去除输入栏加减按钮 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none; 
+    margin: 0; 
+}
+
+/* 标题栏（提供拖动功能）*/
+#titleb {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: transparent;
+  width: 93%;
+}
+
+/* 标题 */
+#whtitle {
+  color: white;
+  opacity: 0.8;
+  position: absolute;
+  top: 5px;
+  left: 2%;
+  font-size: 16px;
+  text-decoration: none;
+  -webkit-user-select:none;
+}
+
+/* 关闭按钮 */
+#close {
+  color: white;
+  opacity: 0.7;
+  position: absolute;
+  top: 8px;
+  right: 2%;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+/* 输入栏区域 */
+#whset {
+  color: white;
+  position: absolute;
+  top: 5%;
+  left: 2%;
+}
+
+#tw, #th {
+  font-size: 15px;
+  -webkit-user-select:none; /* 禁止选中 */
+}
+
+#modWidth, #canvasWidth, #tipsWidth{
+  position: absolute;		/* 定位：绝对 */
+  left: 30px;
+  width: 70px;
+}
+
+#modHeight, #canvasHeight, #tipsHeight{
+  position: absolute;		
+  left: 30px;
+  width: 70px;
+}
+
+#zoomNum{	
+  left: 30px;
+  width: 50px;
+}
+
+#cbSet {
+  position: absolute;
+  top: 8%;
+  left: 45%;
+}
+
+#btn {
+  position: absolute;
+  bottom: 6px;
+  right: 5%;
+}
+
+.button {
+  display: inline-block;	/* 连成一行 */
+  border-radius: 6px;		/* 边框倒角 */
+  background-color: #f4511e;/* 背景颜色 */
+  border: none;				/* 边框 */
+  color: #FFFFFF;			/* 字体颜色 */
+  text-align: center;		/* 文本对齐：居中 */
+  font-size: 12px;			/* 字体大小 */
+  padding: 10px;			/* 四角填充 */
+  width: 70px;				/* 宽度 */
+  transition: all 0.5s;		/* 过渡动画 */
+  cursor: pointer;			/* 光标：指针 */
+  margin: 0px;				/* 白边 */
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;		/* 定位：相对 */
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;				/* 透明度级别 */
+  top: 0;
+  right: 0px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 20px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/* 加载图标字体库 */
+@font-face {
+  font-family: 'Flat-UI-Icons';
+  src: url('flat-ui-icons-regular.eot'); /* IE9 */
+  src: url('flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('flat-ui-icons-regular.woff') format('woff'), 
+  url('flat-ui-icons-regular.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg'); /* iOS 4.1- */
+}
+
+/* css选择器：class属性内容以fui-开头或包含fui- */
+/* 定义ico样式 */
+[class^="fui-"],
+[class*=" fui-"] {
+  font-family: 'Flat-UI-Icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fui-close:before {
+  content: "\e609";
+}
+
+
+
+
+
+
