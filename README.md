@@ -101,21 +101,27 @@ github上关于MOC3的代码有好几个，基本上是同源[alg-wiki/AzurLaneL
 
 ## 程序截图&使用方法
 ![1.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/1.png)
+
 软件主界面，支持MOC和MOC3
 
 ![2.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/2.png)
+
 左键图标显示、隐藏MOD，右键图标弹出选单
 
 ![3.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/3.png)
+
 基础设置菜单，（因为Win10的缩放与布局设置，可能会使程序比例放大变的模糊，这里改小比例会缩放MOD）
 
 ![4.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/4.png)
+
 导入模型，MOC和MOC3分别所选择的文件
 
 ![5.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/5.png)
+
 Alt+鼠标左键移动MOD界面
 
 ![6.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/6.png)
+
 Ctrl+鼠标左键报告当前坐标点（针对部分MOC格式没有设置hit_areas所造成的不能触摸问题，可以自己手动划定触摸区域，详见提供的测试MOD）
 
 
@@ -133,15 +139,23 @@ Ctrl+鼠标左键报告当前坐标点（针对部分MOC格式没有设置hit_ar
 ## 追加
 
 源代码的使用请参见electron官方文档，简单来说应该就是三步。
-# 进入文件夹根目录
+
+**进入文件夹根目录**
+
 $ cd xxxxx
-# 安装依赖库
+
+**安装依赖库**
+
 $ npm install
-# 运行应用
+
+**运行应用**
+
 $ npm start
 
 
-## 声明
+## 版权声明
 
 Copyright (c) 2020-present LONY (kongbaiku)
 本项目采用GPL（GNU通用公共许可协议），可自由修改和使用，但不允许任何形式的商用，包括并不限于添加广告、做为闭源的商业软件发布和销售等。
+
+
