@@ -68,15 +68,13 @@ MOD的设置比例因子也不相同，体现在加载的MOD可能会特别特�
 ![6.PNG](https://github.com/kongbaiku/Live2D-M/blob/main/README/6.png)
 
 
-## 程序百度云
+## 下载
+
+可以选择在github直接下载，太慢的话可以试试百度云（虽然可能一样慢）
 
 **主程序**
 
 下载：[百度云](https://pan.baidu.com/s/1HTHpJhDVWA2A7e7uVdtlSA)，提取码：thcb
-
-**主程序+测试MOD**
-
-下载：[百度云](https://pan.baidu.com/s/1JvyXLsKyiciXP9aR5bekjw)，提取码：qq5g
 
 注：测试MOD是我自己进行修改后提供的样板，基本涵盖了程序所能提供的全部功能。测试MOD的版权归版权方所有，仅供学习和交流使用，并请于下载后24小时内删除，谢谢。
 
