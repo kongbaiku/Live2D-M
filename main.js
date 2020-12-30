@@ -1,17 +1,28 @@
+
 const electron = require('electron');
 const path = require('path');
 const renderer = require('./ML2DTray')
 const fs = require('fs');
 const Store = require('electron-store');
+
+
 const BrowserWindow = electron.BrowserWindow;
 const app = electron.app;
 const ipcM = electron.ipcMain;
+
 const appConfig = new Store();
+
 
 let mainWindow;
 
-/*********************************************************************/
-/*****************************应用初始化******************************/
+
+
+
+
+
+
+
+
 
 function onAppReady ()
 {
@@ -20,14 +31,15 @@ function onAppReady ()
 }
 
 
-/*********************************************************************/
-/*******************************主函数********************************/	
+
+	
 
 function createWindow () 
 {
 	var cWidth,cHeight,cX,cY;
 	var winW = electron.screen.getPrimaryDisplay().workAreaSize.width;
 	var winH = electron.screen.getPrimaryDisplay().workAreaSize.height;
+	
 	
 	if(appConfig.get('custom') == 1)
 	{
@@ -43,6 +55,7 @@ function createWindow ()
 		cX = winW - cWidth;
 		cY = winH - cHeight;
 	}	
+	
 	
 	mainWindow = new BrowserWindow(
 	{
@@ -64,8 +77,10 @@ function createWindow ()
 		}
 	});
 	
+	
 	mainWindow.setContentSize(+cWidth, +cHeight);
 
+	
 	if(appConfig.get('ignoreMouse') == 1)
 	{
 		mainWindow.setIgnoreMouseEvents(true);
@@ -75,8 +90,10 @@ function createWindow ()
 		mainWindow.setIgnoreMouseEvents(false);
 	}
 	
+	
 	mainWindow.loadFile('index.html');
 
+	
 	if(appConfig.get('openDevTools') == 10086)
 	{
 		mainWindow.webContents.openDevTools();
@@ -84,7 +101,14 @@ function createWindow ()
 	
 	
 	global.mainWindow = mainWindow;
+	
+	
+	
+    
+	
+	
 
+	
 	mainWindow.on('closed', function () {
     
 	
@@ -93,36 +117,43 @@ function createWindow ()
 }
 
 
-/*********************************************************************/
-/******************************主窗函数*******************************/	
+
+	
 
 function openWindow ()
 {
+	
+	
 	if (mainWindow === null)
 	{
 		createWindow();
 	}  
 }
 
+
 function closeWindow ()
 {
 	mainWindow.close();
 }
+
 
 function showWindow ()
 {
 	mainWindow.show(); 
 }
 
+
 function hideWindow ()
 {
 	mainWindow.hide(); 
 }
 
+
 function aTopWindow (checked)
 {
 	mainWindow.setAlwaysOnTop(checked);
 }
+
 
 function ignoreMouse (checked)
 {
@@ -137,13 +168,17 @@ function ignoreMouse (checked)
 	}
 }
 
+
 function curBaseConfig ()
 {
 	mainWindow.webContents.send('curBaseConfig');
 }
 
+
 function setBaseConfig (baseWH, ckb, zoomFactor)
 {
+	
+	
 	mainWindow.setContentSize(+baseWH[0], +baseWH[1]);
 	
 	appConfig.set('custom', 1);
@@ -160,7 +195,8 @@ function setBaseConfig (baseWH, ckb, zoomFactor)
 	appConfig.set('canSwitchHitokoto', ckb[6]);
 	appConfig.set('canTakeScreenshot', ckb[7]);
 	appConfig.set('showWelcomeMessage', ckb[8]);
-	appConfig.set('openDevTools', ckb[9]);
+	
+	appConfig.set('modMotions', ckb[10]);
 	
 	appConfig.set('canZoomFactor', zoomFactor[0]);
 	appConfig.set('zoomFactor', zoomFactor[1]);
@@ -168,10 +204,12 @@ function setBaseConfig (baseWH, ckb, zoomFactor)
 	reLoad();
 }
 
+
 function reLoad ()
 {
 	mainWindow.webContents.reload();
 }
+
 
 function reSet ()
 {
@@ -179,8 +217,8 @@ function reSet ()
 }
 
 
-/*********************************************************************/
-/******************************应用函数*******************************/	
+
+	
 
 function openAtLogin (checked)
 {
@@ -195,40 +233,56 @@ function openAtLogin (checked)
 	}
 }
 
+
 function reBoot ()
 {
 	app.relaunch();
     app.quit();
 }
 
+
 function allClosed () 
 {
+	
+	
 	if (process.platform !== 'darwin') app.quit();
 }
 
 
-/*********************************************************************/
-/******************************应用中断*******************************/	
+
+	
 
 app.on('ready', onAppReady);
 
+
 app.on('window-all-closed', allClosed);
+
 
 app.on('activate', openWindow);
 
 
-/*********************************************************************/
-/******************************通讯中断*******************************/	
+
+
+
+
+
+
+
+	
 
 ipcM.on('win-close', closeWindow);
 
+
 ipcM.on('win-reLoad', reLoad);
 
+
 ipcM.on('win-reBoot', reBoot);
+
 
 ipcM.on('reCurBaseConfig', (event, modWH, tipWH, reckb, zoomFactor) => {
 	renderer.reCurBaseConfig(modWH, tipWH, reckb, zoomFactor);
 });
+
 
 ipcM.on('test', (event, temp) => {
 	
@@ -236,8 +290,9 @@ ipcM.on('test', (event, temp) => {
 });
 
 
-/*********************************************************************/
-/******************************外部调用*******************************/	
+
+	
+
 
 exports.hideWindow = hideWindow;
 exports.showWindow = showWindow;
@@ -253,6 +308,6 @@ exports.reLoad = reLoad;
 exports.reSet = reSet;
 
 
-/*********************************************************************/
-/******************************额外说明*******************************/	
+
+	
 

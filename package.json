@@ -1,6 +1,6 @@
 {
   "name": "Live2D-M",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Live2D小程序",
   "main": "main.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "electron-store": "^5.2.0"
   },
   "dependencies": {
-    "electron-store": "^5.2.0"
+    "electron-store": "^5.2.0",
+	"iconv-lite": "^0.6.2"
   }
 }

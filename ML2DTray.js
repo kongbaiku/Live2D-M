@@ -3,19 +3,29 @@ const path = require('path');
 const renderer = require('./main');
 const fs = require('fs');
 const Store = require('electron-store');
+
 const Tray = electron.Tray;
 const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 const dialog = electron.dialog;
 const ipcT = electron.ipcMain;
-const appConfig = new Store();
 
+const appConfig = new Store();
 var tempSizeEvent;
+
+
 let trayMenu;
 
 
-/*********************************************************************/
-/******************************托盘函数*******************************/
+
+
+
+
+
+
+
+
+
 
 function WinShowHide () 
 {
@@ -29,6 +39,7 @@ function WinShowHide ()
 		renderer.showWindow();
 	}
 }
+
 
 function setWHWin () 
 {
@@ -54,19 +65,20 @@ function setWHWin ()
 	
 }
 
+
 function reCurBaseConfig (modWH, tipWH, reckb, zoomFactor) 
 {
 	tempSizeEvent.sender.send('currentBaseConfig', modWH, tipWH, reckb, zoomFactor);
 }
 
 
-/*********************************************************************/
-/******************************托盘配置*******************************/
+
+
 
 function ML2DTray () 
 {	
 	var trayMenu = [
-		/************置顶************/
+		
 		{
 			label: '@置顶', 
 			type: 'checkbox', 
@@ -75,7 +87,7 @@ function ML2DTray ()
 				renderer.aTopWindow (checked);
 			}
 		},
-		/************忽略点击************/
+		
 		{
 			label: '忽略点击',
 			type: 'checkbox',
@@ -84,7 +96,7 @@ function ML2DTray ()
 				renderer.ignoreMouse (checked);
 			}
 		},
-		/************开机启动************/
+		
 		{
 			label: '开机启动',
 			type: 'checkbox', 
@@ -93,16 +105,16 @@ function ML2DTray ()
 				renderer.openAtLogin (checked);
 			}
 		},
-		/************分割线************/
+		
 		{type: 'separator'},
-		/************基础设置************/
+		
 		{
 			label: '基础设置',
 			click: async () => {
 				setWHWin();
 			}
 		},
-		/************导入模型************/
+		
 		{
 			label: '导入模型',
 			click: async () => {
@@ -159,7 +171,7 @@ function ML2DTray ()
 				}
 			}
 		},
-		/************移除模型************/
+		
 		{
 			label: '移除模型',
 			click: function () {
@@ -167,46 +179,52 @@ function ML2DTray ()
 				renderer.reLoad();
 			}
 		},
-		/************重新渲染************/
+		
 		{
 			label: '重新渲染',
 			click: async () => {
 				renderer.reBoot();
 			}
 		},
-		/************软件重置************/
+		
 		{
 			label: '软件重置',
 			click: async () => {
 				renderer.reSet();
 			}
 		},
-		/************分割线************/
+		
 		{type: 'separator'},
-		/************关于************/
+		
 		{
 			label: '关于',
 			click: async () => {
 				dialog.showMessageBox({
 					type:'info',
 					title:'关于',
-					message:'Live2D-M~我的Live2D\n版本：1.2.1\nGithub：https:https://github.com/kongbaiku/Live2D-M',
+					message:'Live2D-M~我的Live2D\n版本：1.2.3\nGithub：https://github.com/kongbaiku/Live2D-M',
 					buttons:['ok']});
 			}
 		},
-		/************退出************/
+		
 		{label: '退出',click: function () {renderer.allClosed();}}
 	];
 	
+	
 	appTray = new Tray(path.join(__dirname, 'ml2d.ico'));
 	
+	
     appTray.setToolTip('ML2D~My L2D');
+ 
     
     const contextMenu = Menu.buildFromTemplate(trayMenu);
 
+    
     appTray.setContextMenu(contextMenu);
 	
+    
     appTray.on('click', WinShowHide);
+	
 	
 	if(mainWindow.isAlwaysOnTop())
 	{
@@ -217,6 +235,7 @@ function ML2DTray ()
 		contextMenu.items[0].checked = false;
 	}
 	
+	
 	if(appConfig.get('ignoreMouse') == 1)
 	{
 		contextMenu.items[1].checked = true;
@@ -225,6 +244,7 @@ function ML2DTray ()
 	{
 		contextMenu.items[1].checked = false;
 	}
+	
 	
 	if(appConfig.get('openAtLogin') == 1)
 	{
@@ -237,16 +257,18 @@ function ML2DTray ()
 }
 
 
-/*********************************************************************/
-/******************************通讯中断*******************************/
+
+
 
 ipcT.on('setConfig', (event, baseWH, ckb, zoomFactor) => {
 	renderer.setBaseConfig(baseWH, ckb, zoomFactor);
 });
 
+
 ipcT.on('winSizeError', (event) => {
 	dialog.showErrorBox('提示信息', '参数值不能为0！');
 });
+
 
 ipcT.on('getBaseConfig', (event) => {
 	
@@ -257,8 +279,8 @@ ipcT.on('getBaseConfig', (event) => {
 });
 
 
-/*********************************************************************/
-/******************************外部调用*******************************/	
+
+	
 
 exports.ML2DTray = ML2DTray;
 exports.reCurBaseConfig = reCurBaseConfig;
