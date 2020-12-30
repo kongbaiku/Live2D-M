@@ -74,7 +74,7 @@ MOD的设置比例因子也不相同，体现在加载的MOD可能会特别特�
 
 **主程序**
 
-下载：[百度云](https://pan.baidu.com/s/1HTHpJhDVWA2A7e7uVdtlSA)，提取码：thcb
+下载：[百度云](https://pan.baidu.com/s/181gDCo7VRV24Xg17AZqmWg)，提取码：mtxg
 
 注：测试MOD是我自己进行修改后提供的样板，基本涵盖了程序所能提供的全部功能。测试MOD的版权归版权方所有，仅供学习和交流使用，并请于下载后24小时内删除，谢谢。
 
