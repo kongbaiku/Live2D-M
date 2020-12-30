@@ -5,48 +5,48 @@ body {
 }
 
 .waifu {
-    position: fixed;
-    bottom: 0;
-    z-index: 1;
-    transform: translateY(5px);
+    position: fixed;/* 相对于窗口绝对定位 */
+    bottom: 0;/* 距离底线0 */
+    z-index: 1;/* 图层层级 */
+    transform: translateY(5px);/* 图层下沉5px */
 }
 
 .waifu:hover {
-    transform: translateY(0);
+    transform: translateY(0);/* 图层归位 */
 }
 
 .mengban {
-	display: none;
-	position: absolute;
-  	width: 100%;
-	height: 100%;
-  	background-color: rgba(32,123,322,.5);
-  	bottom: 0;
-	left: 0;
+	display: none;/* 平常不显示 */
+	position: absolute;/* 相对于父元素绝对定位绝对定位 */
+  	width: 100%;/* 宽填充满 */
+	height: 100%;/* 高填充满 */
+  	background-color: rgba(32,123,322,.5);/* 背景颜色 */
+  	bottom: 0;/* 距离底线0，防止滚动条 */
+	left: 0;/* 距离左线0，防止滚动条 */
 }
 
 .waifu-tips {
-	position: absolute;
-    opacity: 0;
-    margin: 10px 20px;
-    padding: 5px 10px;
-    border: 1px solid rgba(224, 186, 140, 0.62);
-    border-radius: 12px;
-    background-color: rgba(236, 217, 188, 0.5);
-    box-shadow: 0px 3px 15px 2px rgba(191, 158, 118, 0.2);
-    text-overflow: ellipsis;
-    overflow: hidden;
-	-webkit-user-select:none;
-    animation-delay: 5s;
-    animation-duration: 30s;
-    animation-iteration-count: infinite;
-    animation-name: shake;
-    animation-timing-function: ease-in-out;
+	position: absolute;/* 相对于父元素绝对定位 */
+    opacity: 0;/* 不透明度：完全透明 */
+    margin: 10px 20px;/* 外边距：控制对话框位置，上下10px，左右20px */
+    padding: 5px 10px;/* 内边距：控制文本位置，上下5px，左右10px */
+    border: 1px solid rgba(224, 186, 140, 0.62);/* 对话框线条颜色 */
+    border-radius: 12px;/* 对话框四角弧度 */
+    background-color: rgba(236, 217, 188, 0.5);/* 对话框底色 */
+    box-shadow: 0px 3px 15px 2px rgba(191, 158, 118, 0.2);/* 对话框阴影 */
+    text-overflow: ellipsis;/* 文本溢出：省略号 */
+    overflow: hidden;/* 文本溢出处理：隐藏 */
+	-webkit-user-select:none;/* 文本不可选中 */
+    animation-delay: 5s;/* 播放延时 */
+    animation-duration: 30s;/* 播放周期 */
+    animation-iteration-count: infinite;/* 播放次数（无限） */
+    animation-name: shake;/* 摇动 */
+    animation-timing-function: ease-in-out;/* 动画以低速开始和结束 */
 }
 
 .waifu-tool {
-	z-index: 11;
-    display: none;
+	z-index: 11;/* 图层层级 */
+    display: none;/* 通常不显示 */
     color: #aaa;
     top: 5px;
     right: 10%;
@@ -54,7 +54,7 @@ body {
 }
 
 .waifu:hover .waifu-tool {
-    display: block;
+    display: block;/* 悬停显示 */
 }
 
 .waifu-tool span {
@@ -71,15 +71,16 @@ body {
 .waifu #live2d{
     z-index: 10;
     position: relative;
-    bottom: 10px;
+    bottom: 10px;/* 下沉10px，做的鼠标悬停动画 */
 }
 
 .waifu #L2dCanvas{
     z-index: 11;
     position: relative;
-	bottom: 10px;
+	bottom: 10px;/* 下沉10px，做的鼠标悬停动画 */
 }
 
+/* 关键帧抖动 */
 @keyframes shake {
     2% {
         transform: translate(0.5px, -1.5px) rotate(-0.5deg);
@@ -282,15 +283,18 @@ body {
     }
 }
 
+/* 加载图标字体库 */
 @font-face {
   font-family: 'Flat-UI-Icons';
-  src: url('flat-ui-icons-regular.eot'); 
-  src: url('flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), 
+  src: url('flat-ui-icons-regular.eot'); /* IE9 */
+  src: url('flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
   url('flat-ui-icons-regular.woff') format('woff'), 
-  url('flat-ui-icons-regular.ttf') format('truetype'), 
-  url('flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg'); 
+  url('flat-ui-icons-regular.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg'); /* iOS 4.1- */
 }
 
+/* css选择器：class属性内容以fui-开头或包含fui- */
+/* 定义ico样式 */
 [class^="fui-"],
 [class*=" fui-"] {
   font-family: 'Flat-UI-Icons';
@@ -339,6 +343,7 @@ body {
   content: "\e63e";
 }
 
+/* ico大小、颜色 */
 .fui-close, .fui-draggable{
     font-size: 36px;
     color: #72d5df;

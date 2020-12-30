@@ -1,5 +1,11 @@
-!
-function(t) {
+
+const iconv = require('iconv-lite');
+window.live2dPara = Array();
+live2dPara['x'] = 0;
+live2dPara['y'] = 0;
+live2dPara['text'] = 0;
+
+!function(t) {
 	function i(r) {
 		if (e[r]) return e[r].exports;
 		var o = e[r] = {
@@ -502,34 +508,43 @@ function(t) {
 }, function(t, i, e) {
 	"use strict";
 	var r = {
+		
 		DEBUG_LOG: !1,
 		DEBUG_MOUSE_LOG: 0,
 		DEBUG_DRAW_HIT_AREA: !1,
 		DEBUG_DRAW_ALPHA_MODEL: !1,
+		
 		VIEW_MAX_SCALE: 2,
 		VIEW_MIN_SCALE: .8,
+		
 		VIEW_LOGICAL_LEFT: -1,
 		VIEW_LOGICAL_RIGHT: 1,
 		VIEW_LOGICAL_MAX_LEFT: -2,
 		VIEW_LOGICAL_MAX_RIGHT: 2,
 		VIEW_LOGICAL_MAX_BOTTOM: -2,
 		VIEW_LOGICAL_MAX_TOP: 2,
+		
 		PRIORITY_NONE: 0,
 		PRIORITY_IDLE: 1,
 		PRIORITY_SLEEPY: 2,
 		PRIORITY_NORMAL: 3,
 		PRIORITY_FORCE: 4,
+		
 		MOTION_GROUP_IDLE: "idle",
 		MOTION_GROUP_SLEEPY: "sleepy",
+		MOTION_GROUP_TAP_SPECIAL: "tap_special",
+		MOTION_GROUP_TAP_HEAD: "flick_head",
 		MOTION_GROUP_TAP_BODY: "tap_body",
-		MOTION_GROUP_FLICK_HEAD: "flick_head",
 		MOTION_GROUP_TAP_LEG: "tap_leg",
 		MOTION_GROUP_PINCH_IN: "pinch_in",
 		MOTION_GROUP_PINCH_OUT: "pinch_out",
 		MOTION_GROUP_SHAKE: "shake",
+		
+		HIT_AREA_SPECIAL: "special",
+		HIT_AREA_FACE: "face",
 		HIT_AREA_HEAD: "head",
-		HIT_AREA_LEG: "leg",
-		HIT_AREA_BODY: "body"
+		HIT_AREA_BODY: "body",
+		HIT_AREA_LEG: "leg"
 	};
 	t.exports = r
 }, function(t, i, e) {
@@ -616,19 +631,21 @@ function(t) {
 		}())
 	}
 	function _() {
-		O.
-	default.reset(), O.
-	default.loadIdentity(), N.update(), R.setDrag(N.getX(), N.getY()), F.clear(F.COLOR_BUFFER_BIT), O.
-	default.multMatrix(U.getArray()), O.
-	default.multMatrix(B.getArray()), O.
-	default.push();
+		O.default.reset(), 
+		O.default.loadIdentity(), 
+		N.update(), 
+		R.setDrag(N.getX(), 
+		N.getY()), 
+		F.clear(F.COLOR_BUFFER_BIT), 
+		O.default.multMatrix(U.getArray()), 
+		O.default.multMatrix(B.getArray()), 
+		O.default.push();
 		for (var t = 0; t < R.numModels(); t++) {
 			var i = R.getModel(t);
 			if (null == i) return;
-			i.initialized && !i.updating && (i.update(), i.draw(F))
+			i.initialized && !i.updating && (i.update(), i.draw(F));
 		}
-		O.
-	default.pop()
+		O.default.pop();
 	}
 	function a(t) {
 		R.reloadFlg = !0, R.count++, R.changeModel(F, t)
@@ -715,8 +732,8 @@ function(t) {
 			s = T(o.y - i.top);
 		w.
 	default.DEBUG_MOUSE_LOG && console.log("onMouseMove device( x:" + t.clientX + " y:" + t.clientY + " ) view( x:" + n + " y:" + s + ")"), k = e, V = r, N.setPoint(n, s)
-	live2dPoint.x = n;
-	live2dPoint.y = s;
+	live2dPara.x = n;
+	live2dPara.y = s;
 	}
 	function p(t) {
 		Y = !0;
@@ -3929,45 +3946,48 @@ default = o;
 		l = e(1),
 		$ = r(l);
 	o.prototype.createModel = function() {
-		var t = new h.
-	default;
+		var t = new h.default;
 		return this.models.push(t), t
-	}, o.prototype.changeModel = function(t, i) {
-		if (this.reloadFlg) {
-			this.reloadFlg = !1;
-			this.releaseModel(0, t), this.createModel(), this.models[0].load(t, i)
-		}
-	}, o.prototype.getModel = function(t) {
-		return t >= this.models.length ? null : this.models[t]
-	}, o.prototype.releaseModel = function(t, i) {
-		this.models.length <= t || (this.models[t].release(i), delete this.models[t], this.models.splice(t, 1))
-	}, o.prototype.numModels = function() {
-		return this.models.length
-	}, o.prototype.setDrag = function(t, i) {
-		for (var e = 0; e < this.models.length; e++) this.models[e].setDrag(t, i)
-	}, o.prototype.maxScaleEvent = function() {
-		$.
-	default.DEBUG_LOG && console.log("Max scale event.");
-		for (var t = 0; t < this.models.length; t++) this.models[t].startRandomMotion($.
-	default.MOTION_GROUP_PINCH_IN, $.
-	default.PRIORITY_NORMAL)
-	}, o.prototype.minScaleEvent = function() {
-		$.
-	default.DEBUG_LOG && console.log("Min scale event.");
-		for (var t = 0; t < this.models.length; t++) this.models[t].startRandomMotion($.
-	default.MOTION_GROUP_PINCH_OUT, $.
-	default.PRIORITY_NORMAL)
 	}, 
-	//看板娘Tap事件
+	o.prototype.changeModel = function(t, i) {
+		if (this.reloadFlg) 
+		{
+			this.reloadFlg = !1;
+			this.releaseModel(0, t), this.createModel(), this.models[0].load(t, i);
+		}
+	}, 
+	o.prototype.getModel = function(t) {
+		return t >= this.models.length ? null : this.models[t]
+	}, 
+	o.prototype.releaseModel = function(t, i) {
+		this.models.length <= t || (this.models[t].release(i), delete this.models[t], this.models.splice(t, 1))
+	}, 
+	o.prototype.numModels = function() {
+		return this.models.length
+	}, 
+	o.prototype.setDrag = function(t, i) {
+		for (var e = 0; e < this.models.length; e++) this.models[e].setDrag(t, i)
+	}, 
+	o.prototype.maxScaleEvent = function() {
+		$.default.DEBUG_LOG && console.log("Max scale event.");
+		for (var t = 0; t < this.models.length; t++) this.models[t].startRandomMotion($.default.MOTION_GROUP_PINCH_IN, $.default.PRIORITY_NORMAL)
+	}, 
+	o.prototype.minScaleEvent = function() {
+		$.default.DEBUG_LOG && console.log("Min scale event.");
+		for (var t = 0; t < this.models.length; t++) this.models[t].startRandomMotion($.default.MOTION_GROUP_PINCH_OUT, $.default.PRIORITY_NORMAL)
+	}, 	
 	o.prototype.tapEvent = function(t, i) {
-		$.default.DEBUG_LOG && console.log("tapEvent view x:" + t + " y:" + i);
-		
+		$.default.DEBUG_LOG && console.log("tapEvent view x:" + t + " y:" + i + $.default.MOTION_GROUP_TAP_LEG);
 		for (var e = 0; e < this.models.length; e++) 
-			this.models[e].hitTest($.default.HIT_AREA_HEAD, t, i) ? ($.default.DEBUG_LOG && console.log("Tap face."), this.models[e].setRandomExpression()):
+			this.models[e].hitTest($.default.HIT_AREA_SPECIAL, t, i) ? ($.default.DEBUG_LOG && console.log("Tap special."), this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_SPECIAL, $.default.PRIORITY_NORMAL)) : 			
+			this.models[e].hitTest($.default.HIT_AREA_FACE, t, i) ? ($.default.DEBUG_LOG && console.log("Tap face."), this.models[e].setRandomExpression()):
+			this.models[e].hitTest($.default.HIT_AREA_HEAD, t, i) ? ($.default.DEBUG_LOG && console.log("Tap head."), this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_HEAD, $.default.PRIORITY_NORMAL)):
 			this.models[e].hitTest($.default.HIT_AREA_BODY, t, i) ? ($.default.DEBUG_LOG && console.log("Tap body. models[" + e + "]"), this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_BODY, $.default.PRIORITY_NORMAL)) : 
 			this.models[e].hitTest($.default.HIT_AREA_LEG, t, i) ? ($.default.DEBUG_LOG && console.log("Tap leg. models[" + e + "]"), this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_LEG, $.default.PRIORITY_NORMAL)) : 
-			this.models[e].hitTestCustom("head", t, i) ? ($.default.DEBUG_LOG && console.log("Tap face."), 
-			this.models[e].startRandomMotion($.default.MOTION_GROUP_FLICK_HEAD, $.default.PRIORITY_NORMAL)) : 
+			this.models[e].hitTestCustom("special", t, i) ? ($.default.DEBUG_LOG && console.log("Tap special."), 
+			this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_SPECIAL, $.default.PRIORITY_NORMAL)) :
+			this.models[e].hitTestCustom("head", t, i) ? ($.default.DEBUG_LOG && console.log("Tap head."), 
+			this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_HEAD, $.default.PRIORITY_NORMAL)) : 
 			this.models[e].hitTestCustom("body", t, i) ? ($.default.DEBUG_LOG && console.log("Tap body. models[" + e + "]"), 
 			this.models[e].startRandomMotion($.default.MOTION_GROUP_TAP_BODY, $.default.PRIORITY_NORMAL)) :
 			this.models[e].hitTestCustom("leg", t, i) && ($.default.DEBUG_LOG && console.log("Tap leg."), 
@@ -3980,12 +4000,11 @@ default = o;
 	function r() {}
 	Object.defineProperty(i, "__esModule", {
 		value: !0
-	}), i.
-default = r;
+	}), i.default = r;
 	var o = e(2);
 	var requestCache = {};
 	r.prototype.loadBytes = function(t, i) {
-		// Cache 相同的请求，减少请求数量
+		
 		if (requestCache[t] !== undefined) {
 			i(requestCache[t]);
 			return;
@@ -4039,8 +4058,8 @@ default = r;
 	}
 	Object.defineProperty(i, "__esModule", {
 		value: !0
-	}), i.
-default = o;
+	}), 
+	i.default = o;
 	var n = e(0),
 		s = e(11),
 		_ = r(s),
@@ -4049,8 +4068,7 @@ default = o;
 		l = e(3),
 		$ = r(l);
 	o.prototype = new n.L2DBaseModel, o.prototype.load = function(t, i, e) {
-		this.setUpdating(!0), this.setInitialized(!1), this.modelHomeDir = i.substring(0, i.lastIndexOf("/") + 1), this.modelSetting = new _.
-	default;
+		this.setUpdating(!0), this.setInitialized(!1), this.modelHomeDir = i.substring(0, i.lastIndexOf("/") + 1), this.modelSetting = new _.default;
 		var r = this;
 		this.modelSetting.loadModelSetting(i, function() {
 			var t = r.modelHomeDir + r.modelSetting.getModelFile();
@@ -4068,15 +4086,19 @@ default = o;
 									r.loadExpression(i, o)
 								}
 							} else r.expressionManager = null, r.expressions = {};
-							if (r.eyeBlink, null != r.modelSetting.getPhysicsFile() ? r.loadPhysics(r.modelHomeDir + r.modelSetting.getPhysicsFile()) : r.physics = null, null != r.modelSetting.getPoseFile() ? r.loadPose(r.modelHomeDir + r.modelSetting.getPoseFile(), function() {
-								r.pose.updateParam(r.live2DModel)
-							}) : r.pose = null, null != r.modelSetting.getLayout()) {
+							if (r.eyeBlink, 
+								null != r.modelSetting.getPhysicsFile() ? r.loadPhysics(r.modelHomeDir + r.modelSetting.getPhysicsFile()) : r.physics = null,
+								null != r.modelSetting.getPoseFile() ? r.loadPose(r.modelHomeDir + r.modelSetting.getPoseFile(), function() {r.pose.updateParam(r.live2DModel)}) : r.pose = null, 
+								null != r.modelSetting.getLayout()) 
+							{
 								var n = r.modelSetting.getLayout();
 								null != n.width && r.modelMatrix.setWidth(n.width), null != n.height && r.modelMatrix.setHeight(n.height), null != n.x && r.modelMatrix.setX(n.x), null != n.y && r.modelMatrix.setY(n.y), null != n.center_x && r.modelMatrix.centerX(n.center_x), null != n.center_y && r.modelMatrix.centerY(n.center_y), null != n.top && r.modelMatrix.top(n.top), null != n.bottom && r.modelMatrix.bottom(n.bottom), null != n.left && r.modelMatrix.left(n.left), null != n.right && r.modelMatrix.right(n.right)
 							}
-							if (null != r.modelSetting.getHitAreasCustom())//获取自定义点击区域
+							if (null != r.modelSetting.getHitAreasCustom())
 							{
 								var s = r.modelSetting.getHitAreasCustom();
+								null != s.special_x && (h.default.hit_areas_custom_special_x = s.special_x), 
+								null != s.special_y && (h.default.hit_areas_custom_special_y = s.special_y),
 								null != s.head_x && (h.default.hit_areas_custom_head_x = s.head_x), 
 								null != s.head_y && (h.default.hit_areas_custom_head_y = s.head_y), 
 								null != s.body_x && (h.default.hit_areas_custom_body_x = s.body_x),
@@ -4086,9 +4108,11 @@ default = o;
 							}
 							for (var t = 0; t < r.modelSetting.getInitParamNum(); t++) r.live2DModel.setParamFloat(r.modelSetting.getInitParamID(t), r.modelSetting.getInitParamValue(t));
 							for (var t = 0; t < r.modelSetting.getInitPartsVisibleNum(); t++) r.live2DModel.setPartsOpacity(r.modelSetting.getInitPartsVisibleID(t), r.modelSetting.getInitPartsVisibleValue(t));
-							r.live2DModel.saveParam(), r.preloadMotionGroup(h.
-						default.MOTION_GROUP_IDLE), r.preloadMotionGroup(h.
-						default.MOTION_GROUP_SLEEPY), r.mainMotionManager.stopAllMotions(), r.setUpdating(!1), r.setInitialized(!0), "function" == typeof e && e()
+							r.live2DModel.saveParam(), 
+							r.preloadMotionGroup(h.default.MOTION_GROUP_IDLE), 
+							r.preloadMotionGroup(h.default.MOTION_GROUP_SLEEPY), 
+							r.mainMotionManager.stopAllMotions(), r.setUpdating(!1), 
+							r.setInitialized(!0), "function" == typeof e && e()
 						}
 					})
 				}
@@ -4105,81 +4129,129 @@ default = o;
 			})
 		}
 	}, o.prototype.update = function() {
-		if (null == this.live2DModel) return void(h.
-	default.DEBUG_LOG && console.error("Failed to update."));
+		if (null == this.live2DModel) return void(h.default.DEBUG_LOG && console.error("Failed to update."));
 		var t = UtSystem.getUserTimeMSec() - this.startTimeMSec,
 			i = t / 1e3,
 			e = 2 * i * Math.PI;
 		if (this.mainMotionManager.isFinished()) {
-			"1" === sessionStorage.getItem("Sleepy") ? this.startRandomMotion(h.
-		default.MOTION_GROUP_SLEEPY, h.
-		default.PRIORITY_SLEEPY) : this.startRandomMotion(h.
-		default.MOTION_GROUP_IDLE, h.
-		default.PRIORITY_IDLE)
+			
+			"1" === sessionStorage.getItem("Sleepy") && 1 === this.modelSetting.getMotionNum("sleepy") ? 
+			this.startRandomMotion(h.default.MOTION_GROUP_SLEEPY, h.default.PRIORITY_SLEEPY) : 
+			this.startRandomMotion(h.default.MOTION_GROUP_IDLE, h.default.PRIORITY_IDLE)
 		}
-		this.live2DModel.loadParam(), this.mainMotionManager.updateParam(this.live2DModel) || null != this.eyeBlink && this.eyeBlink.updateParam(this.live2DModel), this.live2DModel.saveParam(), null == this.expressionManager || null == this.expressions || this.expressionManager.isFinished() || this.expressionManager.updateParam(this.live2DModel), this.live2DModel.addToParamFloat("PARAM_ANGLE_X", 30 * this.dragX, 1), this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", 30 * this.dragY, 1), this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", this.dragX * this.dragY * -30, 1), this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", 10 * this.dragX, 1), this.live2DModel.addToParamFloat("PARAM_EYE_BALL_X", this.dragX, 1), this.live2DModel.addToParamFloat("PARAM_EYE_BALL_Y", this.dragY, 1), this.live2DModel.addToParamFloat("PARAM_ANGLE_X", Number(15 * Math.sin(e / 6.5345)), .5), this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", Number(8 * Math.sin(e / 3.5345)), .5), this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", Number(10 * Math.sin(e / 5.5345)), .5), this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", Number(4 * Math.sin(e / 15.5345)), .5), this.live2DModel.setParamFloat("PARAM_BREATH", Number(.5 + .5 * Math.sin(e / 3.2345)), 1), null != this.physics && this.physics.updateParam(this.live2DModel), null == this.lipSync && this.live2DModel.setParamFloat("PARAM_MOUTH_OPEN_Y", this.lipSyncValue), null != this.pose && this.pose.updateParam(this.live2DModel), this.live2DModel.update()
+		this.live2DModel.loadParam(), 
+		this.mainMotionManager.updateParam(this.live2DModel) || null != this.eyeBlink && this.eyeBlink.updateParam(this.live2DModel), 
+		this.live2DModel.saveParam(), 
+		null == this.expressionManager || null == this.expressions || this.expressionManager.isFinished() || this.expressionManager.updateParam(this.live2DModel), 
+		this.live2DModel.addToParamFloat("PARAM_ANGLE_X", 30 * this.dragX, 1), 
+		this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", 30 * this.dragY, 1), 
+		this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", this.dragX * this.dragY * -30, 1), 
+		this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", 10 * this.dragX, 1), 
+		this.live2DModel.addToParamFloat("PARAM_EYE_BALL_X", this.dragX, 1), 
+		this.live2DModel.addToParamFloat("PARAM_EYE_BALL_Y", this.dragY, 1), 
+		this.live2DModel.addToParamFloat("PARAM_ANGLE_X", Number(15 * Math.sin(e / 6.5345)), .5), 
+		this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", Number(8 * Math.sin(e / 3.5345)), .5), 
+		this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", Number(10 * Math.sin(e / 5.5345)), .5), 
+		this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", Number(4 * Math.sin(e / 15.5345)), .5), 
+		this.live2DModel.setParamFloat("PARAM_BREATH", Number(.5 + .5 * Math.sin(e / 3.2345)), 1), 
+		null != this.physics && this.physics.updateParam(this.live2DModel), 
+		null == this.lipSync && this.live2DModel.setParamFloat("PARAM_MOUTH_OPEN_Y", this.lipSyncValue), 
+		null != this.pose && this.pose.updateParam(this.live2DModel), this.live2DModel.update();
 	}, o.prototype.setRandomExpression = function() {
 		var t = [];
 		for (var i in this.expressions) t.push(i);
 		var e = parseInt(Math.random() * t.length);
-		this.setExpression(t[e])
+		this.setExpression(t[e]);
 	}, o.prototype.startRandomMotion = function(t, i) {
 		var e = this.modelSetting.getMotionNum(t),
 			r = parseInt(Math.random() * e);
 		this.startMotion(t, r, i)
 	}, o.prototype.startMotion = function(t, i, e) {
 		var r = this.modelSetting.getMotionFile(t, i);
-		if (null == r || "" == r) return void(h.
-	default.DEBUG_LOG && console.error("Failed to motion."));
-		if (e == h.
-	default.PRIORITY_FORCE) this.mainMotionManager.setReservePriority(e);
-		else if (!this.mainMotionManager.reserveMotion(e)) return void(h.
-	default.DEBUG_LOG && console.log("Motion is running."));
+		if (null == r || "" == r) return void(h.default.DEBUG_LOG && console.error("Failed to motion."));
+		if (e == h.default.PRIORITY_FORCE) this.mainMotionManager.setReservePriority(e);
+		else if (!this.mainMotionManager.reserveMotion(e)) return void(h.default.DEBUG_LOG && console.log("Motion is running."));
 		var o, n = this;
 		null == this.motions[t] ? this.loadMotion(null, this.modelHomeDir + r, function(r) {
 			o = r, n.setFadeInFadeOut(t, i, e, o)
 		}) : (o = this.motions[t], n.setFadeInFadeOut(t, i, e, o))
 	}, o.prototype.setFadeInFadeOut = function(t, i, e, r) {
 		var o = this.modelSetting.getMotionFile(t, i);
-		if (r.setFadeIn(this.modelSetting.getMotionFadeIn(t, i)), r.setFadeOut(this.modelSetting.getMotionFadeOut(t, i)), h.
-	default.DEBUG_LOG && console.log("Start motion : " + o), null == this.modelSetting.getMotionSound(t, i)) this.mainMotionManager.startMotionPrio(r, e);
+		if (r.setFadeIn(this.modelSetting.getMotionFadeIn(t, i)), 
+			r.setFadeOut(this.modelSetting.getMotionFadeOut(t, i)), 
+			h.default.DEBUG_LOG && console.log("Start motion : " + o), 
+			null == this.modelSetting.getMotionSound(t, i)) 
+			this.mainMotionManager.startMotionPrio(r, e);
 		else {
 			var n = this.modelSetting.getMotionSound(t, i),
+				x = this.modelSetting.getMotionText(t, i),
 				s = document.createElement("audio");
-			s.src = this.modelHomeDir + n, h.
-		default.DEBUG_LOG && console.log("Start sound : " + n), s.play(), this.mainMotionManager.startMotionPrio(r, e)
+			if(x)
+			{
+				live2dPara.text = iconv.decode(x,"UTF-8");
+			}
+			s.src = this.modelHomeDir + n,
+			h.default.DEBUG_LOG && console.log("Start sound : " + n), 
+			s.play(), 
+			this.mainMotionManager.startMotionPrio(r, e);
 		}
 	}, o.prototype.setExpression = function(t) {
 		var i = this.expressions[t];
-		h.
-	default.DEBUG_LOG && console.log("Expression : " + t), this.expressionManager.startMotion(i, !1)
+		h.default.DEBUG_LOG && console.log("Expression : " + t), 
+		this.expressionManager.startMotion(i, !1);
 	}, o.prototype.draw = function(t) {
-		$.
-	default.push(), $.
-	default.multMatrix(this.modelMatrix.getArray()), this.tmpMatrix = $.
-	default.getMatrix(), this.live2DModel.setMatrix(this.tmpMatrix), this.live2DModel.draw(), $.
-	default.pop()
+		$.default.push(), 
+		$.default.multMatrix(this.modelMatrix.getArray()), 
+		this.tmpMatrix = $.default.getMatrix(), 
+		this.live2DModel.setMatrix(this.tmpMatrix), 
+		this.live2DModel.draw(), 
+		$.default.pop();
 	}, o.prototype.hitTest = function(t, i, e) {
-		for (var r = this.modelSetting.getHitAreaNum(), o = 0; o < r; o++) if (t == this.modelSetting.getHitAreaName(o)) {
+		for (var r = this.modelSetting.getHitAreaNum(), 
+			 o = 0; o < r; o++) 
+			if (t == this.modelSetting.getHitAreaName(o)) {
 			var n = this.modelSetting.getHitAreaID(o);
 			return this.hitTestSimple(n, i, e)
 		}
 		return !1
 	}, o.prototype.hitTestCustom = function(t, i, e) {
-		return "head" == t ? this.hitTestSimpleCustom(h.default.hit_areas_custom_head_x, h.default.hit_areas_custom_head_y, i, e) :
-			   "body" == t ? this.hitTestSimpleCustom(h.default.hit_areas_custom_body_x, h.default.hit_areas_custom_body_y, i, e) :
-			   "leg" == t && this.hitTestSimpleCustom(h.default.hit_areas_custom_leg_x, h.default.hit_areas_custom_leg_y, i, e)
+			if("special" == t && h.default.hit_areas_custom_special_x != undefined)
+			{return this.hitTestSimpleCustom(h.default.hit_areas_custom_special_x, h.default.hit_areas_custom_special_y, i, e)}
+			if("head" == t && h.default.hit_areas_custom_head_x != undefined)
+			{return this.hitTestSimpleCustom(h.default.hit_areas_custom_head_x, h.default.hit_areas_custom_head_y, i, e)}
+			if("body" == t &&h.default.hit_areas_custom_body_x != undefined)
+			{return this.hitTestSimpleCustom(h.default.hit_areas_custom_body_x, h.default.hit_areas_custom_body_y, i, e)}
+			if("leg" == t &&h.default.hit_areas_custom_leg_x != undefined)
+			{return this.hitTestSimpleCustom(h.default.hit_areas_custom_leg_x, h.default.hit_areas_custom_leg_y, i, e)}
 	}
 }, function(t, i, e) {
 	"use strict";
 
 	function r() {
-		this.NAME = "name", this.ID = "id", this.MODEL = "model", this.TEXTURES = "textures", this.HIT_AREAS = "hit_areas", this.PHYSICS = "physics", this.POSE = "pose", this.EXPRESSIONS = "expressions", this.MOTION_GROUPS = "motions", this.SOUND = "sound", this.FADE_IN = "fade_in", this.FADE_OUT = "fade_out", this.LAYOUT = "layout", this.HIT_AREAS_CUSTOM = "hit_areas_custom", this.INIT_PARAM = "init_param", this.INIT_PARTS_VISIBLE = "init_parts_visible", this.VALUE = "val", this.FILE = "file", this.json = {}
+		this.NAME = "name", 
+		this.ID = "id", 
+		this.MODEL = "model", 
+		this.TEXTURES = "textures", 
+		this.HIT_AREAS = "hit_areas", 
+		this.PHYSICS = "physics", 
+		this.POSE = "pose", 
+		this.EXPRESSIONS = "expressions", 
+		this.MOTION_GROUPS = "motions", 
+		this.SOUND = "sound",
+		this.TEXT = "text",		
+		this.FADE_IN = "fade_in", 
+		this.FADE_OUT = "fade_out", 
+		this.LAYOUT = "layout", 
+		this.HIT_AREAS_CUSTOM = "hit_areas_custom", 
+		this.INIT_PARAM = "init_param", 
+		this.INIT_PARTS_VISIBLE = "init_parts_visible", 
+		this.VALUE = "val", 
+		this.FILE = "file", 
+		this.json = {}
 	}
 	Object.defineProperty(i, "__esModule", {
 		value: !0
-	}), i.
-default = r;
+	}), i.default = r;
 	var o = e(0);
 	r.prototype.loadModelSetting = function(t, i) {
 		var e = this;
@@ -4221,6 +4293,8 @@ default = r;
 		return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] ? null : this.json[this.MOTION_GROUPS][t][i][this.FILE]
 	}, r.prototype.getMotionSound = function(t, i) {
 		return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.SOUND] ? null : this.json[this.MOTION_GROUPS][t][i][this.SOUND]
+	}, r.prototype.getMotionText = function(t, i) {
+		return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.SOUND] ? null : this.json[this.MOTION_GROUPS][t][i][this.TEXT]
 	}, r.prototype.getMotionFadeIn = function(t, i) {
 		return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.FADE_IN] ? 1e3 : this.json[this.MOTION_GROUPS][t][i][this.FADE_IN]
 	}, r.prototype.getMotionFadeOut = function(t, i) {
@@ -4238,7 +4312,5 @@ default = r;
 	}
 }]);
 
-window.live2dPoint = Array();
-live2dPoint['x'] = 0;
-live2dPoint['y'] = 0;
-//# sourceMappingURL=live2d.js.map
+
+
