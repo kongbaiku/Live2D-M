@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http:<head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
 	<link rel="stylesheet" href="assets/modal.css"/>
 </head>
 <body >
@@ -58,7 +59,8 @@
 		var ipcTR = require('electron').ipcRenderer;
 		var webFrame = require('electron').webFrame;
 		
-				document.getElementById("modSwitch").disabled = "disabled";
+		
+		document.getElementById("modSwitch").disabled = "disabled";
 		document.getElementById("randMod").disabled = "disabled";
 		document.getElementById("skinSwitch").disabled = "disabled";
 		document.getElementById("randSkin").disabled = "disabled";
@@ -66,16 +68,19 @@
 		document.getElementById("yiyanBtn").disabled = "disabled";
 		document.getElementById("screenshot").disabled = "disabled";
 				
-		ipcTR.send('getBaseConfig');			
+		ipcTR.send('getBaseConfig');
+			
 			
 
 	
-				ipcTR.on('currentWinSize', (event, width, height) => {
+		
+		ipcTR.on('currentWinSize', (event, width, height) => {
 			document.getElementById("canvasWidth").value = width;
 			document.getElementById("canvasHeight").value = height;
 		});
 		
-				ipcTR.on('currentBaseConfig', (event, modWH, tipWH, reckb, zoomFactor) => {
+		
+		ipcTR.on('currentBaseConfig', (event, modWH, tipWH, reckb, zoomFactor) => {
 			document.getElementById("modWidth").value = modWH[0];
 			document.getElementById("modHeight").value = modWH[1];
 			document.getElementById("tipsWidth").value = tipWH[0];
@@ -102,7 +107,8 @@
 			}
 			
 			
-			if(reckb[0] == 1)			{
+			if(reckb[0] == 1)
+			{
 				document.getElementById("modSwitch").disabled = "";
 				document.getElementById("skinSwitch").disabled = "";
 				document.getElementById("yiyan").disabled = "";
@@ -120,25 +126,34 @@
 					document.getElementById("yiyanBtn").disabled = "";
 				}
 			}
-			if(reckb[1] == 1)			document.getElementById("randMod").disabled = "";
-			if(reckb[3] == 1)			document.getElementById("randSkin").disabled = "";
-			if(reckb[5] == 1)			document.getElementById("yiyanBtn").disabled = "";	
+			if(reckb[1] == 1)
+			document.getElementById("randMod").disabled = "";
+			if(reckb[3] == 1)
+			document.getElementById("randSkin").disabled = "";
+			if(reckb[5] == 1)
+			document.getElementById("yiyanBtn").disabled = "";	
 		});
 		
 	
 
 	
-				document.getElementById('ok').onclick = function () {
-						if(canvasWidth.value != 0 && modWidth.value != 0 && tipsWidth.value != 0)
+		
+		document.getElementById('ok').onclick = function () {
+			
+			if(canvasWidth.value != 0 && modWidth.value != 0 && tipsWidth.value != 0)
 			{
 				if(canvasHeight.value != 0 && modHeight.value != 0 && tipsHeight.value != 0)
 				{
 					var baseWH = new Array();			
-					baseWH[0] = canvasWidth.value;					baseWH[1] = canvasHeight.value;
-					baseWH[2] = modWidth.value;					baseWH[3] = modHeight.value;
-					baseWH[4] = tipsWidth.value;					baseWH[5] = tipsHeight.value;	
+					baseWH[0] = canvasWidth.value;
+					baseWH[1] = canvasHeight.value;
+					baseWH[2] = modWidth.value;
+					baseWH[3] = modHeight.value;
+					baseWH[4] = tipsWidth.value;
+					baseWH[5] = tipsHeight.value;	
 
-										var ckb = new Array();  
+					
+					var ckb = new Array();  
 					var items = document.getElementsByName("ckb");                 
 					for (i = 0; i < items.length; i++)
 					{                    
@@ -152,7 +167,8 @@
 						}
 					}
 					
-					var zoomFactor = new Array();					zoomFactor[0] = 1;
+					var zoomFactor = new Array();
+					zoomFactor[0] = 1;
 					zoomFactor[1] = zoomNum.value;
 					
 					ipcTR.send('setConfig', baseWH, ckb, zoomFactor);
@@ -169,14 +185,16 @@
 			}				
 		}
 		
-				document.getElementById('cancel').onclick = function () {
+		
+		document.getElementById('cancel').onclick = function () {
 			window.close();
 		}
 
 
 
 	
-				document.getElementById('toolbar').onclick = function () {
+		
+		document.getElementById('toolbar').onclick = function () {
 			if(document.getElementById('toolbar').checked == true)
 			{
 				document.getElementById("modSwitch").disabled = "";
@@ -207,7 +225,8 @@
 			}
 		}
 		
-				document.getElementById('modSwitch').onclick = function () {
+		
+		document.getElementById('modSwitch').onclick = function () {
 			if(document.getElementById('modSwitch').checked == true)
 			{
 				document.getElementById("randMod").disabled = "";
@@ -219,7 +238,8 @@
 			}
 		}
 		
-				document.getElementById('skinSwitch').onclick = function () {
+		
+		document.getElementById('skinSwitch').onclick = function () {
 			if(document.getElementById('skinSwitch').checked == true)
 			{
 				document.getElementById("randSkin").disabled = "";
@@ -231,7 +251,8 @@
 			}
 		}
 		
-				document.getElementById('yiyan').onclick = function () {
+		
+		document.getElementById('yiyan').onclick = function () {
 			if(document.getElementById('yiyan').checked == true)
 			{
 				document.getElementById("yiyanBtn").disabled = "";
