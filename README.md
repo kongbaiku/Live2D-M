@@ -8,7 +8,7 @@ M的意思就是My Live2D（笑
 
 [开发过程](https://github.com/kongbaiku/Live2D-M/wiki/%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B)
 
-[MOC配置说明](https://github.com/kongbaiku/Live2D-M/wiki/%E6%84%9F%E8%B0%A2%E5%90%8D%E5%8D%95)(待施工)
+[MOC配置说明](https://github.com/kongbaiku/Live2D-M/wiki/MOC%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
 
 [MOC3配置说明](https://github.com/kongbaiku/Live2D-M/wiki/%E6%84%9F%E8%B0%A2%E5%90%8D%E5%8D%95)(待施工)
 
