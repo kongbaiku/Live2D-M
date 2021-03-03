@@ -10,7 +10,7 @@ M的意思就是My Live2D（笑
 
 [MOC配置说明](https://github.com/kongbaiku/Live2D-M/wiki/MOC%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
 
-[MOC3配置说明](https://github.com/kongbaiku/Live2D-M/wiki/%E6%84%9F%E8%B0%A2%E5%90%8D%E5%8D%95)(待施工)
+[MOC3配置说明](https://github.com/kongbaiku/Live2D-M/wiki/MOC3%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
 
 [感谢名单](https://github.com/kongbaiku/Live2D-M/wiki/%E6%84%9F%E8%B0%A2%E5%90%8D%E5%8D%95)
 
